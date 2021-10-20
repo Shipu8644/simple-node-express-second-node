@@ -15,16 +15,32 @@ const users = [
     { id: 5, name: 'Susmita', email: 'Susmita@gmail.com', phone: '01788888888' },
 ]
 
+// use query parameter
 app.get('/users', (req, res) => {
-    res.send(users);
+    const search = req.query.search;
+    if (search) {
+        const searchResult = users.filter(user => user.name.toLowerCase().includes(search));
+        res.send(searchResult);
+    }
+    else {
+        res.send(users);
+    }
+
 })
 
+//dynamic api
 app.get('/users/:id', (req, res) => {
     id = req.params.id;
     const user = users[id];
     res.send(user);
 })
 
+app.get('/fruits', (req, res) => {
+    res.send(['mango', 'oranges', 'banana', 'apple'])
+})
+app.get('/fruits/mangoes/fazli', (req, res) => {
+    res.send('Yummy Yummy tok marka fazli');
+})
 app.listen(port, () => {
     console.log('Listening to', port);
 })
