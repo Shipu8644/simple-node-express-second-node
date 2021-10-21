@@ -1,7 +1,11 @@
 const express = require('express');
-const app = express();
+const cors = require('cors');
 
-const port = process.env.PORT || 3000;
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const port = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {
     res.send("My second node with Express started Yooo Alhamdulillah");
@@ -25,6 +29,17 @@ app.get('/users', (req, res) => {
     else {
         res.send(users);
     }
+
+})
+
+// app method
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+    newUser.id = users.length;
+    users.push(newUser);
+    console.log('post is hitting', req.body);
+    // res.send(JSON.stringify(newUser));
+    res.json(newUser);
 
 })
 
